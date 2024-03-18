@@ -1,3 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.h-1\/12{
+  height: calc(100% / 12);
+}
+
+.h-11\/12{
+  height: calc((100% / 12) * 11);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +22,56 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.pokeballWrapper{
+  height: 12.5vw;
+  width: 12.5vw;
+  position: absolute;
+  top: calc(50vh - 6.25vw);
+  left: 41.75%;
+}
+
+.pokeball {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid;
+  animation: frames 1.2s linear 0s infinite;
+}
+
+.pokeball:after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  border-bottom: 4px solid;
+  top: -50%;
+}
+
+.pokeball:before{
+  content: '';
+  position: absolute;
+  background-color: #fff;
+  width: 15%;
+  height: 15%;
+  border: 4px solid;
+  border-radius: 50%;
+  left: calc(50% - 7.5%);
+  top: calc(50% - 7.5%);
+  z-index: 1;
+}
+
+/* AnimationFrames */
+@keyframes frames{
+  0% {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }
