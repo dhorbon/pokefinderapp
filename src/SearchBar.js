@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function SearchBar(Search, Random, currPokemon, Pokedex){
+function SearchBar({Search}){
   const [input, setInput] = useState("")
 
   const handleInput = (event) => {
@@ -8,7 +8,6 @@ function SearchBar(Search, Random, currPokemon, Pokedex){
   }
 
   const handleSubmit = (event) => {
-    console.log(event)
     if(event.code === "Enter"){
       setInput("")
       try{
@@ -21,7 +20,7 @@ function SearchBar(Search, Random, currPokemon, Pokedex){
 
   return(
     <div className="w-screen h-1/12 bg-red-600">
-      <input placeholder="Search for a pokemon..." type="text" className="rounded w-1/2 h-1/2 relative left-1/4 top-1/4" onChange={handleInput} onKeyDown={handleSubmit}></input>
+      <input placeholder="Search for a pokemon..." type="text" className="rounded w-1/2 h-1/2 relative left-1/4 top-1/4" onChange={handleInput} onKeyDown={handleSubmit} value={input}></input>
     </div>
   )
 }

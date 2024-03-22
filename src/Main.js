@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, useContext } from "react";
 import SearchBar from "./SearchBar";
 import InfoScreen from "./InfoScreen";
+import LoadingScreen from "./LoadingScreen.js";
+import { ContextPokemons } from "./Load.js";
+import SelectScreen from "./SelectScreen.js";
 
-function Main(Pokedex) {
-  Pokedex = Pokedex.Pokedex.results
+function Main() {
+  const Pokedex = useContext(ContextPokemons)
   const [currPokemon, setCurPokemon] = useState(Math.ceil(Math.random()*(Pokedex.length-1)))
-  const [input, setInput] = useState("")
 
   function Search(query) {
     if(query != ""){
@@ -24,19 +26,26 @@ function Main(Pokedex) {
     }
   }
 
-  const Select = (id) => {
-    setCurPokemon(id);
+  const Select = (query) => {
+    let tempId;
+    for(let i = 0; i < Pokedex.length; i++){
+      if(Pokedex[i].name === query){
+        tempId = Pokedex[i].id
+        break
+      }
+    }
+    setCurPokemon(tempId);
   }
 
   const Random = () => {
-    setCurPokemon(Math.random()*(Pokedex.count-1))
+    setCurPokemon(Math.ceil(Math.random()*(Pokedex.length-1)))
   }
 
   return(
     <div className="h-screen">
-      <SearchBar Search={Search} input={input} setInput={setInput} />
-      <InfoScreen pokeInfo={Pokedex[currPokemon]} />
-      {/*<SelectScreen Select={Select} Random={Random} currPokemon={currPokemon} Pokedex={Pokedex} />*/}
+      <SearchBar Search={Search} />
+      <InfoScreen pokeInfo={currPokemon} />
+      <SelectScreen Select={Select} Random={Random} />
     </div>
   );
 }

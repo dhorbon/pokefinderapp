@@ -25,11 +25,11 @@ code {
 }
 
 .pokeballWrapper{
-  height: 12.5vw;
-  width: 12.5vw;
+  width: 12.5%;
   position: absolute;
-  top: calc(50vh - 6.25vw);
+  top: 45%;
   left: 41.75%;
+  aspect-ratio: 1/1;
 }
 
 .pokeball {

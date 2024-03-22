@@ -1,29 +1,32 @@
-import { useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Main from "./Main";
-import './index.css'
+import './index.css';
+import LoadingScreen from "./LoadingScreen.js";
+import * as Pokemon from 'pokeapi-js-wrapper'
 
-function LoadingScreen() {
-  return(
-    <div className="bg-red-600 h-screen w-screen pl-1/2">
-      <div className="pokeballWrapper">
-        <div className="pokeball" />
-      </div>
-    </div>
-  )
-}
+const API = new Pokemon.Pokedex()
+
+export const ContextPokemons = createContext()
 
 function Load() {
-  const API = new (require("pokeapi-js-wrapper").Pokedex)()
   const [Pokedex, setPokedex] = useState(null)
-  if(Pokedex === null){
-    API.getPokemonsList().then((response)=>{setPokedex(response)})
-    return(
-      <LoadingScreen />
-    );
-  }
   
-  return (
-    <Main Pokedex={Pokedex} />
+  useEffect(() => {
+    (async () => {
+      const data = await API.getPokemonsList()
+      setPokedex(data.results)
+    })()
+    
+  }, [])
+  
+  return Pokedex ? (
+    <ContextPokemons.Provider value={Pokedex}>
+      <Main />
+    </ContextPokemons.Provider>
+  ) : (
+    <div className="w-screen h-screen">
+      <LoadingScreen />
+    </div>
   );
 }
 
